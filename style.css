@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css?family=Francois+One&display=swap');
+
+#front-page{
+    background-image: url('https://wallpapercave.com/wp/wp3053214.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+#nav-bar{
+    height: 5rem;
+}
+
+#register-form{
+    height: calc(100vh - 80px);
+}
+
+#login-form{
+    height: calc(100vh - 80px);
+}
+
+#setLogin{
+    color: blue;
+}
+
+#setLogin:hover{
+    cursor: pointer;
+    color: black;
+}
+
+#setRegister{
+    color: blue;
+}
+
+#setRegister:hover{
+    cursor: pointer;
+    color: black;
+}
+
+.task{
+    height: calc(100vh - 100px);
+}
+
+#welcome-text{
+    color: greenyellow;
+    font-size: 5rem;
+    opacity: 0;
+    font-family: 'Francois One', sans-serif;
+}
+
+.navbar-brand{
+    font-family: 'Francois One', sans-serif;
+    font-size: 2rem;
+}
+
+.get-start{
+    padding: 15px;
+    font-family: 'Francois One', sans-serif;
+    font-size: 20px;
+    margin-top: 80px;
+    opacity: 0;
+}
+
+.get-start:hover{
+    color: white;
+}
+
+#back-home{
+    cursor: pointer;
+}
+
+#title-text{
+    color: white;
+    font-family: 'Francois One', sans-serif;
+    margin-bottom: 2rem;
+    animation: myanimation 5s infinite;
+}
+
+.side-bar{
+    height: calc(100vh - 100px);
+}
+
+.content-todo{
+    height: calc(100vh - 100px);
+}
+
+.card-wrap{
+    height: calc(100vh - 170px);
+}
+
+#add-todo{
+    font-size: 2rem;
+    color: blue;
+    cursor: pointer;
+}
+
+#add-todo:hover{
+    color: red;
+}
+
+.content-title{
+    font-family: 'Francois One', sans-serif;
+    font-size: 2rem;
+}
+
+.card-body{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.card-body:hover{
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.Pending{
+    border-bottom: 4px solid red;
+    border-top: 4px solid red;
+}
+
+.Done{
+    border-bottom: 4px solid green;
+    border-top: 4px solid green;
+}
+
+.card-link{
+    font-size: 1.5rem;
+}
+
+@keyframes myanimation {
+    0% {color: red;}
+    25%{color:yellow;}
+    50%{color:green;}
+    75%{color:brown;}
+    100% {color: red;}
+}
