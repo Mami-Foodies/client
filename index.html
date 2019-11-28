@@ -106,25 +106,41 @@
     <!-- End homepage and login -->
 
     <!-- Main Page -->
-    <div>
+    <div id="main-page">
+            <nav id="nav-bar" class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between">
+                    <div onclick="backHome()" id="back-home">
+                        <a class="navbar-brand"><i class="fas fa-utensils mr-3"></i>Mami Foodies</a>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline-primary" onclick="signOut()">Signout</button>
+                    </div>
+            </nav>
+        
 
 
-<!-- Highlight a place or an address -->
+
+
+
+        <div>
+        <!-- Highlight a place or an address -->
         <iframe width="600" height="450" frameborder="0" style="border:0"
         src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJB-I8cajxaS4RxfqLovShPiw&key=..." allowfullscreen></iframe>
 
 
 
-<!-- get driving direction -->
+        <!-- get driving direction -->
         <iframe width="600" height="450" frameborder="0" style="border:0"
         src="https://www.google.com/maps/embed/v1/directions?origin=place_id:ChIJB-I8cajxaS4RxfqLovShPiw&destination=place_id:ChIJHTgvgPX2aS4ReiDDN1DWFug&key=AIzaSyB7M7GX2lx2Jd72pCYcHb0mpZed0XoQEcU" allowfullscreen></iframe>
 
         
-<!-- get places -->
+        <!-- get places -->
         <iframe width="600" height="450" frameborder="0" style="border:0"
-src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJT2GSWxfxaS4RmVptOU1wc2E&key=..." allowfullscreen></iframe>
+        src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJT2GSWxfxaS4RmVptOU1wc2E&key=..." allowfullscreen></iframe>
+        </div>
+
+
     </div>
-    <!-- End Page -->
+    <!-- End Main Page -->
     
     <script src="https://kit.fontawesome.com/ac67c212ce.js" crossorigin="anonymous"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>

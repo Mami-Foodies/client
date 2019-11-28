@@ -1,7 +1,6 @@
 $(document).ready(function(){
     if(localStorage.getItem('token')){
       isLogin(true)
-      getUserTodo()
     }else{
       isLogin(false)
     }
@@ -28,10 +27,6 @@ $(document).ready(function(){
       event.preventDefault()
     })
   
-    $('#create-todo').submit(function(event){
-      event.preventDefault()
-    })
-  
     $('#back-home').click(function(){
       $('#main-look').show('fast')
       $('#login').hide('fast')
@@ -51,7 +46,6 @@ $(document).ready(function(){
   }
   
   function onSignIn(googleUser) {
-      var profile = googleUser.getBasicProfile();
       let id_token = googleUser.getAuthResponse().id_token;
       $.ajax({
           url: 'http://localhost:3000/user/signin/google',
@@ -82,12 +76,12 @@ $(document).ready(function(){
   function signOut() {
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(function () {
+        localStorage.clear()
         Swal.fire({
           icon: 'success',
           title: 'Logout User',
           text: 'Logout Success'
         })
-        localStorage.clear()
         $('#front-page').show()
         $('#main-look').show()
         $('#main-page').hide()
@@ -127,6 +121,7 @@ $(document).ready(function(){
   function login(){
     let email = $('#emailLog').val()
     let password = $('#passLog').val()
+    console.log(password)
     $.ajax({
       url: 'http://localhost:3000/user/login',
       method: 'POST',
@@ -138,7 +133,6 @@ $(document).ready(function(){
       $('#front-page').hide()
       $('#main-page').show()
       localStorage.setItem('token', data.token)
-      getUserTodo()
       Swal.fire({
         icon: 'success',
         title: 'User Login',

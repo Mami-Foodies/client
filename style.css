@@ -20,21 +20,21 @@
 }
 
 #setLogin{
-    color: blue;
+    color: white;
 }
 
 #setLogin:hover{
     cursor: pointer;
-    color: black;
+    color: yellow;
 }
 
 #setRegister{
-    color: blue;
+    color: white;
 }
 
 #setRegister:hover{
     cursor: pointer;
-    color: black;
+    color: yellow;
 }
 
 .task{
