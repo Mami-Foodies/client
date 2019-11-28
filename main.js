@@ -57,8 +57,29 @@ $(document).ready(function(){
       console.log('Image URL: ' + profile.getImageUrl());
       console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
       let id_token = googleUser.getAuthResponse().id_token;
-      $('#front-page').hide()
-      $('#main-page').show()
+      $.ajax({
+          url: 'http://localhost:3000/user/signin/google',
+          method: 'POST',
+          data:{
+              idToken: id_token
+          }
+      })
+      .done(response=>{
+        Swal.fire({
+            icon: 'success',
+            title: 'Login User',
+            text: 'Login Success'
+        })
+        $('#front-page').hide()
+        $('#main-page').show()
+      })
+      .fail(err=>{
+        Swal.fire({
+            icon: 'error',
+            title: 'Loging Google',
+            text: 'Login Error'
+        })
+      })
   }
   
   function signOut() {
