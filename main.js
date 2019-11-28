@@ -61,6 +61,7 @@ $(document).ready(function(){
           }
       })
       .done(response=>{
+        localStorage.setItem('token', response.token)
         Swal.fire({
             icon: 'success',
             title: 'Login User',
