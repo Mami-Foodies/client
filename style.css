@@ -125,10 +125,13 @@
     width: 100%;
 } 
 
+
+
+
 #detail-body{
-    padding-top: 0 !important;
+    padding-top: 0 !important;
 }
 
 mark{
-    background-color: chartreuse !important;
+    background-color: chartreuse !important;
 }
