@@ -215,12 +215,21 @@ $(document).ready(function(){
   }
 
   function detailRestaurant(id){
+
     $.ajax({
       url: `http://localhost:3000/api/zomato/restaurant/${id}`,
       method: 'GET'
     })
     .done(response => {
+      const responseFiltered = {
+        name: response.name,
+        locality: response.locality,
+        address: response.location.address,
+        longitude: response.longtitude,
+        latitude: response.latitude
 
+      }
+      console.log(response)  
     })
     .fail(err => {
       
