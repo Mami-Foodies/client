@@ -188,14 +188,13 @@ $(document).ready(function(){
       $('#searchRes').val('')
       response.forEach(restaurant => {
         $('#content-resto').append(`
-        <div class="card mr-2 mt-3 card-content" style="width: 18rem;">
+        <div class="card mr-2 mt-3 card-content" style="width: 18rem;" onclick="detailRestaurant(${restaurant.id})">
           <img src="${restaurant.thumb}" class="card-img-top" alt="gambar">
           <div class="card-body d-flex flex-column justify-content-between">
               <div class="">
               <h5 class="card-title">${restaurant.name}</h5>
-              <p class="text-muted">Address</p>
-              <p>${restaurant.location.locality}</p>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p class="text-muted">${restaurant.location.address}</p>
+              <p class="card-text"></p>
               </div>
               <div>
               <a href="#" class="btn btn-success">${restaurant.user_rating.aggregate_rating}</a>
@@ -212,5 +211,18 @@ $(document).ready(function(){
     })
     .fail(err => {
       console.log(err)
+    })
+  }
+
+  function detailRestaurant(id){
+    $.ajax({
+      url: `http://localhost:3000/api/zomato/restaurant/${id}`,
+      method: 'GET'
+    })
+    .done(response => {
+
+    })
+    .fail(err => {
+      
     })
   }
