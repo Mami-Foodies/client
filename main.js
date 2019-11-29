@@ -184,7 +184,7 @@ $(document).ready(function(){
     })
     .done((response) => {
       $('#content-resto').empty()
-      $('#searchVal').val('')
+      $('#searchRes').val('')
       response.forEach(restaurant => {
         $('#content-resto').append(`
         <div class="card mr-2 mt-3 card-content" style="width: 18rem;">
@@ -203,6 +203,11 @@ $(document).ready(function(){
         </div>
         `)
       });
+      Swal.fire({
+        icon: 'success',
+        title: 'Fetching Resto',
+        text: 'Success!'
+      })
     })
     .fail(err => {
       console.log(err)
