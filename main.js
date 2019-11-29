@@ -187,21 +187,55 @@ $(document).ready(function(){
       $('#content-resto').empty()
       $('#searchRes').val('')
       response.forEach(restaurant => {
-        $('#content-resto').append(`
-        <div class="card mr-2 mt-3 card-content" style="width: 18rem;" onclick="getRestaurantDetail(${restaurant.id})">
-          <img src="${restaurant.thumb}" class="card-img-top" alt="gambar">
-          <div class="card-body d-flex flex-column justify-content-between">
-              <div class="">
-              <h5 class="card-title">${restaurant.name}</h5>
-              <p class="text-muted">${restaurant.location.address}</p>
-              <p class="card-text"></p>
-              </div>
-              <div>
-              <a href="#" class="btn btn-success">${restaurant.user_rating.aggregate_rating}</a>
-              </div>
+        if(restaurant.user_rating.aggregate_rating >= 3){
+          $('#content-resto').append(`
+          <div class="card mr-2 mt-3 card-content" style="width: 18rem;" onclick="getRestaurantDetail(${restaurant.id})">
+            <img src="${restaurant.thumb}" class="card-img-top" alt="gambar">
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div class="">
+                <h5 class="card-title">${restaurant.name}</h5>
+                <p class="text-muted">${restaurant.location.address}</p>
+                <p class="card-text"></p>
+                </div>
+                <div>
+                <a href="#" class="btn btn-success">${restaurant.user_rating.aggregate_rating}</a>
+                </div>
+            </div>
           </div>
-        </div>
-        `)
+          `)
+        }else if(restaurant.user_rating.aggregate_rating < 3 && restaurant.user_rating.aggregate_rating >= 2){
+          $('#content-resto').append(`
+          <div class="card mr-2 mt-3 card-content" style="width: 18rem;" onclick="getRestaurantDetail(${restaurant.id})">
+            <img src="${restaurant.thumb}" class="card-img-top" alt="gambar">
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div class="">
+                <h5 class="card-title">${restaurant.name}</h5>
+                <p class="text-muted">${restaurant.location.address}</p>
+                <p class="card-text"></p>
+                </div>
+                <div>
+                <a href="#" class="btn btn-warning">${restaurant.user_rating.aggregate_rating}</a>
+                </div>
+            </div>
+          </div>
+          `)
+        }else{
+          $('#content-resto').append(`
+          <div class="card mr-2 mt-3 card-content" style="width: 18rem;" onclick="getRestaurantDetail(${restaurant.id})">
+            <img src="${restaurant.thumb}" class="card-img-top" alt="gambar">
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div class="">
+                <h5 class="card-title">${restaurant.name}</h5>
+                <p class="text-muted">${restaurant.location.address}</p>
+                <p class="card-text"></p>
+                </div>
+                <div>
+                <a href="#" class="btn btn-success">${restaurant.user_rating.aggregate_rating}</a>
+                </div>
+            </div>
+          </div>
+          `)
+        }
       });
       Swal.fire({
         icon: 'success',
