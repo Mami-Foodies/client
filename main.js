@@ -41,14 +41,21 @@ $(document).ready(function(){
     })
   })
   
+  function backHome(){
+    $('#main-page').show()
+    $('#detail-page').hide()
+  }
+
   function isLogin(status){
     if(status){
       $('#front-page').hide()
       $('#main-page').show()
+      $('#detail-page').hide()
     }else{
       $('#login').hide()
       $('#register').hide()
       $('#main-page').hide()
+      $('#detail-page').hide()
     }
   }
   
@@ -95,6 +102,7 @@ $(document).ready(function(){
         $('#main-page').hide()
         $('#login').hide()
         $('#register').hide()
+        $('#detail-page').hide()
       });
   }
   
@@ -230,7 +238,7 @@ $(document).ready(function(){
                 <p class="card-text"></p>
                 </div>
                 <div>
-                <a href="#" class="btn btn-success">${restaurant.user_rating.aggregate_rating}</a>
+                <a href="#" class="btn btn-danger">${restaurant.user_rating.aggregate_rating}</a>
                 </div>
             </div>
           </div>
@@ -254,26 +262,70 @@ $(document).ready(function(){
       url:`http://localhost:3000/api/zomato/restaurant/${id}`
     })
     .done(restaurant=>{
-      
+      $('#main-page').hide()
+      $('#detail-page').show()
+      $('#detail-one-card').empty()
+      $('#detail-one-card').append(`
+      <h2>${restaurant.name}</h2>
+      <p>${restaurant.location.address}</p>
+      `)
+      $('#rating-one-card').empty()
+      $('#rating-one-card').append(`
+      <h1><mark>${restaurant.user_rating.aggregate_rating}</mark></h1>
+      `)
+      $('#number-resto').empty()
+      $('#number-resto').append(`
+      <h4>Nomor Telephone</h4>
+      <h5 style="color:darkgreen">
+      ${restaurant.phone_numbers}
+      </h5>
+      <p style="color: darkgray">Reservasi meja direkomendasikan</p><br />
+      <h4>Harga Rata-rata</h4>
+      <p>Rp. ${restaurant.average_cost_for_two}</p>
+      <div id="new-rate"></div>
+      <div class="d-flex">
+      <select class="custom-select mr-3" id="inputGroupSelect01">
+        <option selected>Choose...</option>
+        <option value="USD">USD</option>
+        <option value="JPY">JPY</option>
+        <option value="SGD">SGD</option>
+      </select>
+      <button class="btn btn-success" onclick="getConvertedRate(${id})">Convert</button>
+      </div>
+      <br />
+      <h4>Masakan</h4>
+      <p style="color: red">
+      ${restaurant.cuisines}</p>
+      `)
+
+      $('#resto-time').empty()
+      $('#resto-time').append(`
+      <h4>Jam Buka</h4>
+      <p>${restaurant.timings}</p>
+      <br />
+      <h4>Alamat</h4>
+      <p>${restaurant.location.address}</p>
+      <br />
+      `)
+      $('#list-highlight').empty()
+      let hg = restaurant.highlights
+      hg.forEach(element => {
+        $('#list-highlight').append(`
+        <li>${element}</li>
+        `)
+      })
+      $('#head-image').empty()
+      $('#head-image').append(`
+      <img class="w-100"
+      src="${restaurant.thumb}"
+      class="d-block caro-detail" alt="gambar" style="vertical-align: middle"/>
+      `)
       const restObj = {
         name: restaurant.name,
         latitude: restaurant.location.latitude,
         longitude: restaurant.location.longitude
       }
-      
       getPlaceId(restObj)
-  
-  
-  
-      const individualMenu={
-        price:10000,
-        convertFrom:'IDR',
-        convertInto:'USD'
-      }
-  
-      getConvertedRate(individualMenu)
-  
-  
     })
     .fail(err=>{
       console.log(err)
@@ -281,8 +333,7 @@ $(document).ready(function(){
   
   }
   
-  function getPlaceId(objRestLocation)
-  {
+  function getPlaceId(objRestLocation){
     $.ajax({
       method: 'get',
       url: `http://localhost:3000/api/gmap/getplaceidbylonglat/?restname=${objRestLocation.name}&latitude=${objRestLocation.latitude}&longitude=${objRestLocation.longitude}`
@@ -290,38 +341,53 @@ $(document).ready(function(){
     .done(placeId=>{
       $('#restaurant-location').empty()
       $('#restaurant-location').append(`
-        woiwoiwowiowio
-        ${placeId}
-  
         <div class="mt-5">
           <!-- Highlight a place or an address -->
           <iframe width="100%" height="450" frameborder="0" style="border:0"
           src="https://www.google.com/maps/embed/v1/place?q=place_id:${placeId}&key=AIzaSyB7M7GX2lx2Jd72pCYcHb0mpZed0XoQEcU" allowfullscreen></iframe>
-  
       `)
-  
     })
     .fail(err=>{
       console.log(err)
     })
   }
   
-  function getConvertedRate(individualMenu)
-  {
+
+  function getConvertedRate(id){
+    let currency = $('#inputGroupSelect01').val()
+    $.ajax({
+      method:'get',
+      url:`http://localhost:3000/api/zomato/restaurant/${id}`
+    })
+    .done(restaurant => {
+        const individualMenu={
+          price:restaurant.average_cost_for_two,
+          convertFrom:'IDR',
+          convertInto:`${currency}`
+        }
+        getRate(individualMenu)
+    })
+    .fail(err => {
+      console.log(err)
+    })
+    
+  }
+
+
+  function getRate(individualMenu){
     $.ajax({
       method:'get',
       url:`http://localhost:3000/api/currency/getcurrencyrate/?price=${individualMenu.price}&convertFrom=${individualMenu.convertFrom}&convertInto=${individualMenu.convertInto}`
     })
     .done(result=>{
-      $('#converted-rate').empty()
-      $('#converted-rate').append(`
-        ${individualMenu.convertInto} ${result}
+      $('#new-rate').empty()
+      $('#new-rate').append(`
+        <p style="color: red">${individualMenu.convertInto} ${result}</p>
       `)
     })
     .fail(err=>{
       console.log(err)
     })
-    
   }
 
 
