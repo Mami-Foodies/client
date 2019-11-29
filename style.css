@@ -115,3 +115,20 @@
 .caro-text{
     font-size: 20px;
 }
+
+.caro-detail{
+    max-height: calc(100vh);
+}
+
+.carousel-item{
+    height: 400px;
+    width: 100%;
+} 
+
+#detail-body{
+    padding-top: 0 !important;
+}
+
+mark{
+    background-color: chartreuse !important;
+}
