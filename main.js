@@ -1,6 +1,7 @@
 $(document).ready(function(){
     if(localStorage.getItem('token')){
       isLogin(true)
+      fetchRestaurant()
     }else{
       isLogin(false)
     }
@@ -25,6 +26,12 @@ $(document).ready(function(){
   
     $('#setRegister').click(function(event){
       event.preventDefault()
+    })
+
+    $('#search-resto').submit(function(event){
+      event.preventDefault()
+      let value = $('#searchRes').val()
+      fetchRestaurant(value)
     })
   
     $('#back-home').click(function(){
@@ -121,13 +128,13 @@ $(document).ready(function(){
   function login(){
     let email = $('#emailLog').val()
     let password = $('#passLog').val()
-    console.log(password)
     $.ajax({
       url: 'http://localhost:3000/user/login',
       method: 'POST',
       data: { email, password}
     })
     .done(data => {
+      fetchRestaurant('')
       $('#emailLog').val('')
       $('#passLog').val('')
       $('#front-page').hide()
@@ -161,4 +168,43 @@ $(document).ready(function(){
   function showRegister(){
     $('#register').show('fast')
     $('#main-look').hide('fast')
+  }
+
+  function fetchRestaurant(value){
+    let place;
+    if(!value || value == ''){
+      place = 'KebayoranLama'
+    }else{
+      place = value
+    }
+    $.ajax({
+      url: 'http://localhost:3000/api/zomato/search',
+      method: 'POST',
+      data: { place }
+    })
+    .done((response) => {
+      $('#content-resto').empty()
+      $('#searchVal').val('')
+      response.forEach(restaurant => {
+        $('#content-resto').append(`
+        <div class="card mr-2 mt-3 card-content" style="width: 18rem;">
+          <img src="${restaurant.thumb}" class="card-img-top" alt="gambar">
+          <div class="card-body d-flex flex-column justify-content-between">
+              <div class="">
+              <h5 class="card-title">${restaurant.name}</h5>
+              <p class="text-muted">Address</p>
+              <p>${restaurant.location.locality}</p>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+              <div>
+              <a href="#" class="btn btn-success">${restaurant.user_rating.aggregate_rating}</a>
+              </div>
+          </div>
+        </div>
+        `)
+      });
+    })
+    .fail(err => {
+      console.log(err)
+    })
   }
