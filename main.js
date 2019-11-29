@@ -63,6 +63,7 @@ $(document).ready(function(){
       })
       .done(response=>{
         localStorage.setItem('token', response.token)
+        fetchRestaurant('')
         Swal.fire({
             icon: 'success',
             title: 'Login User',
